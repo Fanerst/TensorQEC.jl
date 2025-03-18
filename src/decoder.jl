@@ -49,6 +49,9 @@ function decode(decoder::IPDecoder, tanner::SimpleTannerGraph, syndrome::Vector{
     H = [a.x for a in tanner.H]
     return DecodingResult(true,_mixed_integer_programming(H, [s.x for s in syndrome], p_vec;verbose))
 end
+function decode(decoder::IPDecoder, pcm::Matrix{Bool}, syndrome::Vector{Bool}, p_vec::Vector{Float64}; verbose = false)
+    return DecodingResult(true, _mixed_integer_programming(pcm, syndrome, p_vec; verbose))
+end
 
 function _mixed_integer_programming(H::Matrix{Bool}, syndrome::Vector{Bool}, p_vec::Vector{Float64};verbose = false)
     m,n = size(H)
